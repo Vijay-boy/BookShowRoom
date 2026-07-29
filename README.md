@@ -14,7 +14,7 @@ BookShowRoom is a Full Stack Web Application developed to manage books efficient
 - Spring Boot
 
 ### Database
-- MySQL
+- PostgreSQL
 
 ## ✨ Features
 - Add Book
