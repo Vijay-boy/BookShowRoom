@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Books Dashboard</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Book Id</th>
+                    <th>Book Name</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>Image</th>
+                    <th>Price</th>
+                    <th>Stock Count</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbl-data">
+
+            </tbody>
+        </table>
+
+        <a href="add-book.html" class="btn btn-primary">Add Book</a>
+    </div>
+
+    <script>
+
+            async function loadAPI(){
+                const res = await fetch('http://localhost:8081/api/books');
+                const data = await res.json();
+
+                //console.log(data);
+                renderData(data);
+            }
+            loadAPI()
+
+            function renderData(books){
+                let txt="";
+
+                for(book of books){
+                    txt += `<tr>
+                        <td>${book.bookId}</td>
+                        <td>${book.name}</td>
+                        <td>${book.author}</td>
+                        <td>${book.category}</td>
+                        <td>  <img src="${book.imgUrl}" width="50" height="70" />  </td>
+                        <td>${book.price}</td>
+                        <td>${book.stockCount}</td>
+                        <td> <a href="edit-book.html?id=${book.bookId}" class="btn btn-warning">Edit</a> 
+                            <button class="btn btn-danger" onclick="deleteBook(${book.bookId})">Delete</button>
+                            </td>
+                        </tr>`
+
+                        document.getElementById('tbl-data').innerHTML=txt
+                }
+            }
+
+            async function deleteBook(id){
+                const res = await fetch(`http://localhost:8081/api/books/${id}`,{
+                    method: 'DELETE',
+                    headers: {'Content-Type':'application/json'}
+                })
+                const data = await res.json();
+
+                loadAPI();
+
+                // console.log(data);
+                
+            }
+    </script>
+</body>
+</html>
