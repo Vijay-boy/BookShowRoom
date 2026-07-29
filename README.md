@@ -1,4 +1,4 @@
-# 📚 BookShowRoom Management System
+# 📚 BookShowRoom
 
 ## 📌 Project Description
 BookShowRoom is a Full Stack Web Application developed to manage books efficiently. Users can add, update, delete, and view book details.
